@@ -168,10 +168,11 @@ int main() {
                     in.time.hour,  in.time.minute,  in.time.second,
                     out.date.day,  out.date.month,  out.date.year,
                     out.time.hour, out.time.minute, out.time.second);
+        debug_print("//-------------------------------------------------//\n");
     }
 
    /* WARNING:
-    * C++ container types (i.e. <vector>) serialization does not work!
+    * C++ container type (e.g. <vector>) serialization does not work!
     * After deserialization 'vector out' actually points to the same 
     * memory region of 'vector in'. It's not a copy!
     * In real cases it's gonna be even worse and 'out' will point to garbage
@@ -182,17 +183,21 @@ int main() {
         vector<int> in = {-5, -7, 0, 1, 3, 8, 12, -20, 39, 53};
         vector<int> out;
         int size = sizeof(in);
-        serialize("vec", &in, size);
+        serialize("data", &in, size);
         deserialize("data", &out, size);
 
+        int old_value = in[0];
         in[0] = 1;
 
         for (auto i = in.begin(), j = out.begin();
              i != in.end() && j != out.end();
              ++i, ++j) {
 
-           // assert(*i == *j);
-            printf("%d %d\n", *i, *j);
+            int expected = (i == in.begin()) ? old_value : *i; 
+
+            // Uncomment to see the error.
+            //assert(expected == *j /* out[0] should be equal to in[0] */);
+            debug_print("expected: %d; got: %d\n", expected, *j);
         }
     }
 
