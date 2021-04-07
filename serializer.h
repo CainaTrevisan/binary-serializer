@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdarg.h>
-#include <assert.h>
 #include <string.h>
 
 typedef char byte;
