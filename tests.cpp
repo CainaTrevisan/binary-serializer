@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdarg.h>
+#include <assert.h>
 #include <vector>
 #include "serializer.h"
 
